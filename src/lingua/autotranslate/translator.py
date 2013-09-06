@@ -3,6 +3,7 @@ import argparse
 import polib
 import re
 import time
+import urllib2
 
 from translate import Translator
 
@@ -42,8 +43,9 @@ def autotranslate(path, target_language, ignore_already_translated=True):
 
             try:
                 translated = translator.translate(to_translate)
-            except:
-                log(31, 'Error', entry.msgid)
+            except urllib2.HTTPError as e:
+                log(31, 'Error', u'{0:s} raised {1}: {2:s}'.format(
+                    entry, e.__class__, e))
                 continue
 
             log(32, 'Success', u'{0} -> {1}'.format(to_translate, translated))
@@ -53,7 +55,7 @@ def autotranslate(path, target_language, ignore_already_translated=True):
             time.sleep(BREATHE)
 
     except KeyboardInterrupt:
-        pass
+        log(31, 'Quit', '')
 
     catalog.save()
 
@@ -63,10 +65,11 @@ def AutoTranslator():
     parser.add_argument('-i', dest='input', action='append', nargs=2,
                               required=True, metavar=('<locale>', '<po file>'),
                               help='Locale and filename of po-file to process')
-    parser.add_argument('--force', default=False, required=False,
-                                   help='Force retranslation of all translated'
-                                        'msgids.')
+    parser.add_argument('-u', dest='update', action='store_const',
+                              default=False, const=True,
+                              help='Force updating translations by '
+                                   'retranslating all msgids.')
     options = parser.parse_args()
 
     for locale, pofile in options.input:
-        autotranslate(pofile, locale)
+        autotranslate(pofile, locale, not options.update)
