@@ -1,5 +1,3 @@
-.. contents::
-
 Introduction
 ============
 
@@ -33,7 +31,8 @@ When running ``bin/buildout`` it will create a new console script for you,
 Example:
 --------
 
-::
+See translation example below.::
+
     ~/workspace/my.product $ bin/autotranslate -i de src/my/product/locales/de/LC_MESSAGES/my.product.po
     [ Success ] New product -> Neues Produkt
     [ Success ] Specification -> Beschreibung
