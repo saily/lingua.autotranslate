@@ -27,7 +27,7 @@ def autotranslate(path, target_language, ignore_already_translated=True):
         raise Exception(("Encoding problem while parsing {0}, are you "
                          "sure that's a PO file?").format(path))
 
-    translator = Translator(to_lang='de', from_lang=SOURCE_LANGUAGE)
+    translator = Translator(to_lang=target_language, from_lang=SOURCE_LANGUAGE)
     try:
         for idx, entry in enumerate(catalog):
 
