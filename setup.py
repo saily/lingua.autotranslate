@@ -3,8 +3,20 @@ from setuptools import find_packages
 from setuptools import setup
 
 import os
+import sys
 
 version = '0.2.dev0'
+
+
+install_requires = [
+    "polib",
+    "translate",
+    "setuptools",
+    # -*- Extra requirements: -*-
+]
+
+if sys.version_info < (2, 7):
+    install_requires.append("argparse")
 
 
 def read(*pathnames):
@@ -39,12 +51,7 @@ setup(name='lingua.autotranslate',
       namespace_packages=['lingua'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=[
-          "polib",
-          "translate",
-          "setuptools",
-          # -*- Extra requirements: -*-
-      ],
+      install_requires=install_requires,
       entry_points="""
       [console_scripts]
       autotranslate = lingua.autotranslate.translator:AutoTranslator
