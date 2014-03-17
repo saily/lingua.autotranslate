@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.3 (unreleased)
+0.2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Update docs.
+  [saily]
 
 
 0.2 (2014-03-17)
