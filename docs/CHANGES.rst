@@ -4,7 +4,8 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- python3 compat
+  [saily]
 
 
 0.2.1 (2014-03-17)

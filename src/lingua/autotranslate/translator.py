@@ -3,9 +3,15 @@ import argparse
 import polib
 import re
 import time
-import urllib2
-
 from translate import Translator
+
+
+try:
+    # For Python 3.0 and later
+    from urllib.error import HTTPError
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import HTTPError
 
 
 DEFAULT = re.compile(r'Default:\s(.*)')
@@ -17,8 +23,12 @@ SUCCESS = 32
 INFO = 33
 
 
-def log(bash_color, type, text):
-    print u'[\033[{0}m {1} \033[0m] {2}'.format(bash_color, type, text)
+def log(bash_color, typ, text):
+    print('[\033[{color}m {typ} \033[0m] {text}'.format(
+        color=bash_color,
+        typ=typ,
+        text=text
+    ))
 
 
 def autotranslate(path, source_language, target_language,
@@ -50,7 +60,7 @@ def autotranslate(path, source_language, target_language,
             variables = VAR_REGEX.search(to_translate)
             try:
                 translated = translator.translate(to_translate.encode('utf-8'))
-            except urllib2.HTTPError as e:
+            except HTTPError as e:
                 log(ERROR, 'Error', u'{0:s} raised {1}: {2:s}'.format(
                     entry, e.__class__, e))
                 continue
